@@ -10,7 +10,9 @@ import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import feedbackRouter from './routes/feedbackRoute.js';
 import serverHealth from './controllers/serverController.js';
+import authRouter from './routes/authRoutes.js';
 dotenv.config();
+
 
 const app = express();
 const port = 4000;
@@ -33,6 +35,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ✅ Routes
 app.use('', serverHealth);
+app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter);
 app.use('/api/food', foodRouter);
 app.use('/api/cart',cartRouter);

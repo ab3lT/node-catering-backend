@@ -5,4 +5,4 @@ const ROLES = {
     SYSTEM_ADMIN: "System Admin",
 };
 
-module.exports = ROLES;
+export default ROLES;
