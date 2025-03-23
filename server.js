@@ -14,6 +14,8 @@ import authRouter from './routes/authRoutes.js';
 import catering_router from './routes/cateringManagerRoutes.js';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import customer_router from './routes/customerRoute.js';
+import category_router from './routes/categoryRoute.js';
 
 dotenv.config();
 
@@ -72,6 +74,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('', serverHealth);
 app.use('/api/auth', authRouter);
 app.use('/api/catering', catering_router);
+app.use('/api', category_router);
+app.use('/api/customer',customer_router);
 app.use('/api/user', userRouter);
 app.use('/api/food', foodRouter);
 app.use('/api/cart', cartRouter);

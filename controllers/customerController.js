@@ -3,7 +3,7 @@ import Stock from '../models/stock.js';
 import Order from '../models/order.js';
 import Schedule from '../models/schedule.js';
 import Feedback from '../models/feedback.js';
-import category_router from '../routes/categoryRoute.js';
+
 
 export const addMenuItem = async (req, res) => {
 
@@ -52,7 +52,7 @@ export const deleteMenuItem = async (req, res) => {
 
 export const getMenu = async (req, res) => {
     try {
-        const menu = await Menu.find();
+        const menu = await Menu.find({}, 'name price description category image');
         res.status(200).json(menu);
     } catch (error) {
         res.status(500).json({ message: "Server Error", error });
