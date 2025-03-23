@@ -4,14 +4,48 @@ import Order from '../models/order.js';
 import Schedule from '../models/schedule.js';
 import Feedback from '../models/feedback.js';
 
-// MENU MANAGEMENT
+// // MENU MANAGEMENT
+// export const addMenuItem = async (req, res) => {
+//     try {
+//         const { name, price, description, category } = req.body;
+//         const menuItem = new Menu({ name, price, description, category });
+//         await menuItem.save();
+//         res.status(201).json({ message: "Menu item added successfully", menuItem });
+//     } catch (error) {
+//         res.status(500).json({ message: "Server Error", error });
+//     }
+// };
 export const addMenuItem = async (req, res) => {
+    // try {
+    //     const { name, price, description, category } = req.body;
+    //     const image = req.file ? `/uploads/${req.file.filename}` : null; // Store image path
+
+    //     const menuItem = new Menu({ name, price, description, category, image });
+    //     await menuItem.save();
+
+    //     res.status(201).json({ message: "Menu item added successfully", menuItem });
+    // } catch (error) {
+    //     res.status(500).json({ message: "Server Error", error });
+    // }
     try {
+        console.log("Request Body:", req.body); // Debugging log
+        console.log("Uploaded File:", req.file); // Debugging log
+
         const { name, price, description, category } = req.body;
-        const menuItem = new Menu({ name, price, description, category });
+
+        // Ensure all required fields exist
+        if (!name || !price || !description || !category) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        const image = req.file ? `/uploads/${req.file.filename}` : null;
+
+        const menuItem = new Menu({ name, price, description, category, image });
         await menuItem.save();
+
         res.status(201).json({ message: "Menu item added successfully", menuItem });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Server Error", error });
     }
 };

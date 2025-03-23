@@ -7,6 +7,7 @@ import {
     acceptOrder, assignSchedule, updateOrderStatus,
     viewCustomerLocation, viewFeedback, generateReport, getSchedule
 } from '../controllers/cateringManagerController.js';
+import { upload } from "../middleware/multer.js";
 
 const catering_router = express.Router();
 
@@ -17,30 +18,53 @@ catering_router.use(protect, authorizeRoles(ROLES.CATERING_MANAGER));
 
 /**
  * @swagger
- * /api/catering/menu/add:
+ * tags:
+ *   name: Menu Management
+ *   description: API for managing menu items
+ */
+
+/**
+ * @swagger
+ * /api/catering/menu:
  *   post:
  *     summary: Add a new menu item
  *     tags: [Menu Management]
+ *     description: Upload a menu item with an image
  *     requestBody:
- *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
+ *             required:
+ *               - name
+ *               - price
+ *               - description
+ *               - category
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Name of the menu item
  *               price:
  *                 type: number
+ *                 description: Price of the menu item
  *               description:
  *                 type: string
+ *                 description: Description of the menu item
  *               category:
  *                 type: string
+ *                 description: Category of the menu item
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: Image of the menu item
  *     responses:
  *       201:
  *         description: Menu item added successfully
+ *       500:
+ *         description: Server error
  */
-catering_router.post('/menu/add', addMenuItem);
+catering_router.post("/menu", upload.single("image"), addMenuItem);
+
 
 /**
  * @swagger
