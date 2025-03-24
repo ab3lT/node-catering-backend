@@ -1,30 +1,35 @@
 import jwt from 'jsonwebtoken';
-import userModel from '../models/userModel.js';
-import ROLES from '../config/roles.js'
-// Protect routes
-const protect = async (req, res, next) => {
-    let token;
-    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        try {
-            token = req.headers.authorization.split(" ")[1];
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await userModel.findById(decoded.id).select("-password");
-            next();
-        } catch (error) {
-            return res.status(401).json({ message: "Not authorized, token failed" });
-        }
+import User from '../models/userModel.js';
+import asyncHandler from 'express-async-handler';
+
+export const protect = asyncHandler(async (req, res, next) => {
+  let token;
+
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select('-password');
+      next();
+    } catch (error) {
+      res.status(401);
+      throw new Error('Not authorized, token failed');
     }
-    if (!token) return res.status(401).json({ message: "Not authorized, no token" });
-};
+  }
 
-// Role-based access control
-const authorizeRoles = (...roles) => {
-    return (req, res, next) => {
-        if (!roles.includes(req.user.role)) {
-            return res.status(403).json({ message: "Access Denied" });
-        }
-        next();
-    };
-};
+  if (!token) {
+    res.status(401);
+    throw new Error('Not authorized, no token');
+  }
+});
 
-export {protect, authorizeRoles};
+export const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    console.log(`User role: ${req.user.role}`); // Debugging line
+    if (!roles.includes(req.user.role)) {
+      res.status(403);
+      throw new Error('User role not authorized');
+    }
+    next();
+  };
+};
