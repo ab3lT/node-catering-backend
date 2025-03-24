@@ -136,7 +136,8 @@ authRouter.post('/register/executive-chef', registerExecutiveChef);
  *       403:
  *         description: Forbidden - Only System Admins can access this route
  */
-authRouter.post('/register/system-admin', protect, authorizeRoles(ROLES.SYSTEM_ADMIN), registerSystemAdmin);
+// authRouter.post('/register/system-admin', protect, authorizeRoles(ROLES.SYSTEM_ADMIN), registerSystemAdmin);
+authRouter.post('/register/system-admin', registerSystemAdmin);
 
 /**
  * @swagger
