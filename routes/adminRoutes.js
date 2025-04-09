@@ -48,7 +48,7 @@ admin_router.get('/clients', getCustomers);
 
 /**
  * @swagger
- * /api/admin/deleteaccount:
+ * /api/admin/delete/:id:
  *   delete:
  *     summary: Admin To delete account
  *     tags: [Admin Management]
@@ -56,11 +56,11 @@ admin_router.get('/clients', getCustomers);
  *       200:
  *         description: Data from the previous controller
  */
-admin_router.delete('/deleteaccount', deleteAccount);
+admin_router.delete('/delete/:id', deleteAccount);
 
 /**
  * @swagger
- * /api/admin/another:
+ * /api/admin/update:
  *   put:
  *     summary: Update Any Account with Id
  *     tags: [Admin Management]
@@ -89,17 +89,17 @@ admin_router.delete('/deleteaccount', deleteAccount);
  *                 description: The role of the account
  *     responses:
  *       200:
- *         description: Data from another controller
+ *         description: updated successfully 
  *       400:
  *         description: Invalid input
  *       404:
- *         description: Account not found
+ *         description: user not found
  */
-admin_router.put('/update', updateAccount);
+admin_router.put('/update/:id', updateAccount);
 
 // /**
 //  * @swagger
-//  * /api/admin/update:
+//  * /api/admin/update/:id:
 //  *   put:
 //  *     summary: update user
 //  *     tags: [Admin Management]
@@ -107,6 +107,6 @@ admin_router.put('/update', updateAccount);
 //  *       200:
 //  *         description: Data from yet another controller
 //  */
-// admin_router.get('/yet-another', yetAnotherController);
+
 
 export default admin_router;

@@ -41,9 +41,12 @@ export const deleteAccount = async (req, res) => {
     }
 };
 
-export const updateAccount = async (req, res) => {
+export const updateAccount = async ( req, res) => {
     try {
+        console.log(req.body);
         const { id } = req.params;
+        
+        console.log(id)
         const updatedUser = await userModel.findByIdAndUpdate(id, req.body, { new: true });
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });

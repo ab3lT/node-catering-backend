@@ -5,51 +5,6 @@ import Schedule from '../models/schedule.js';
 import Feedback from '../models/feedback.js';
 
 
-export const addMenuItem = async (req, res) => {
-
-    try {
-        console.log("Request Body:", req.body); // Debugging log
-        console.log("Uploaded File:", req.file); // Debugging log
-
-        const { name, price, description, category } = req.body;
-
-        // Ensure all required fields exist
-        if (!name || !price || !description || !category) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
-
-        const image = req.file ? `/uploads/${req.file.filename}` : null;
-
-        const menuItem = new Menu({ name, price, description, category, image });
-        await menuItem.save();
-
-        res.status(201).json({ message: "Menu item added successfully", menuItem });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server Error", error });
-    }
-};
-
-export const updateMenuItem = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updatedItem = await Menu.findByIdAndUpdate(id, req.body, { new: true });
-        res.status(200).json({ message: "Menu item updated", updatedItem });
-    } catch (error) {
-        res.status(500).json({ message: "Server Error", error });
-    }
-};
-
-export const deleteMenuItem = async (req, res) => {
-    try {
-        const { id } = req.params;
-        await Menu.findByIdAndDelete(id);
-        res.status(200).json({ message: "Menu item deleted" });
-    } catch (error) {
-        res.status(500).json({ message: "Server Error", error });
-    }
-};
-
 export const getMenu = async (req, res) => {
     try {
         const menu = await Menu.find({}, 'name price description category image');

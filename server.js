@@ -7,7 +7,7 @@ import userRouter from './routes/userRoute.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cartRouter from './routes/cartRoute.js';
-import orderRouter from './routes/orderRoute.js';
+
 import feedbackRouter from './routes/feedbackRoute.js';
 import serverHealth from './controllers/serverController.js';
 import authRouter from './routes/authRoutes.js';
@@ -81,7 +81,7 @@ app.use('/api/customer',customer_router);
 app.use('/api/user', userRouter);
 app.use('/api/food', foodRouter);
 app.use('/api/cart', cartRouter);
-app.use('/api/order', orderRouter);
+// app.use('/api/order', orderRouter);
 app.use('/api/feedback', feedbackRouter);
 
 // ✅ Database Connection

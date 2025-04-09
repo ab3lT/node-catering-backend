@@ -14,6 +14,19 @@ const orderSchema = new mongoose.Schema({
         default: "Pending"
     },
     totalAmount: { type: Number, required: true },
+    paidAmount: { type: Number, default: 0 }, // Amount actually paid
+    paymentStatus: {
+        type: String,
+        enum: ["Pending", "Half Paid", "Paid"],
+        default: "Pending"
+    },
+    paymentTxRefs: [
+        {
+            tx_ref: String,
+            amount: Number,
+            paidAt: { type: Date, default: Date.now }
+        }
+    ],
     createdAt: { type: Date, default: Date.now }
 });
 
